@@ -47,32 +47,42 @@ And some small ios game created by Swift.</p>
 <p><img src="https://raw.githubusercontent.com/xubinzheng/BlueCrew/master/Gif/BKondemo.gif"></p>
 
 <h3>
-<a id="i-just-found-something-wrong-about-sdk-ios-starter" class="anchor" href="#i-just-found-something-wrong-about-sdk-ios-starter" aria-hidden="true"><span class="octicon octicon-link"></span></a>I just found something wrong about SDK IOS starter.</h3>
+<a id="ibm-bluemix-mobile-data-ios-sdk-error-solution" class="anchor" href="#ibm-bluemix-mobile-data-ios-sdk-error-solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>IBM BlueMix mobile data IOS SDK error solution</h3>
 
-<p>Add the Mobile Cloud Services SDK to your iOS app
-The SDK contains the client code to access all of the mobile services. Both SDKs are subject to the license agreement contained within the archive.</p>
+<p>From(<a href="https://www.ng.bluemix.net/docs/#starters/mobile/ios/ios.html">https://www.ng.bluemix.net/docs/#starters/mobile/ios/ios.html</a>). When running the "pod install" command, the following error is returned:</p>
 
-<p>Install the SDK and dependencies with CocoaPods. From the folder where you have downloaded your sample, run the following command:</p>
+<p>[!] Due to the previous naïve CocoaPods resolver, you were using a pre-release version of IBMBluemix, without explicitly asking for a pre-release version, which now leads to a conflict. Please decide to either use that pre-release version by adding the version requirement to your Podfile (e.g. pod 'IBMBluemix', '= 1.0.0.20140707-1250') or revert to a stable version by running pod update IBMBluemix.</p>
 
-<pre><code>$ pod install
+<p>However, running pod update IBMBluemix results in:</p>
+
+<p>[!] Due to the previous naïve CocoaPods resolver, you were using a pre-release version of IBMFileSync, without explicitly asking for a pre-release version, which now leads to a conflict. Please decide to either use that pre-release version by adding the version requirement to your Podfile (e.g. pod 'IBMFileSync', '= 1.0.0.20140707-1250') or revert to a stable version by running pod update IBMFileSync.</p>
+
+<p>and trying pod update IBMFileSync results in it looping back to the error about updating IBMBluemix pod.</p>
+
+<p>It seems the latest update to Cocoapods is causing this issue. I was forced to revert to an earlier version to allow the dependencies to install correctly.</p>
+
+<p>If you have the latest version installed you will have to call:</p>
+
+<pre><code> [sudo] gem uninstall cocoapods
 </code></pre>
 
-<p>But I really suggest if someone want to install the SKD, use the following command firstly instead previous one</p>
+<p>I was forced to uninstall the other gems as well:</p>
 
-<pre><code>$ pod update
+<pre><code> [sudo] gem uninstall cocoapods-core
+ [sudo] gem uninstall cocoapods-downloader  
+ [sudo] gem uninstall cocoapods-plugins
+ [sudo] gem uninstall cocoapods-trunk
+ [sudo] gem uninstall cocoapods-try
 </code></pre>
 
-<p>Because sometimes due to the previous naive CocoaPods resolver, someone were using a pre-release version of 'IBMBluemix', without explicity asking for a pre-release version, which now leads to a conflict. So use this command to check firstly will be really helpful.</p>
+<p>Then you can install any version below 0.35.0. I used 0.33.1 but 0.34 is supported as well:</p>
+
+<pre><code> [sudo] gem install cocoapods -v 0.33.1
+</code></pre>
+
+<p>After done the previous steps, the Bluemix mobile data service SDK should be work.</p>
 
 <pre><code>https://www.ng.bluemix.net/docs/#starters/mobile/ios/ios.html
-</code></pre>
-
-<h3>
-<a id="readme-is-a-summary-and-a-guide-of-each-project-please-read-them-careful-and-some-project-may-need-your-help-to-be-better" class="anchor" href="#readme-is-a-summary-and-a-guide-of-each-project-please-read-them-careful-and-some-project-may-need-your-help-to-be-better" aria-hidden="true"><span class="octicon octicon-link"></span></a>README is a summary and a guide of each project, please read them careful. And some project may need your help to be better.</h3>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
 </code></pre>
 
 <h3>
