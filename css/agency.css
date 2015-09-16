@@ -296,7 +296,7 @@ header .intro-text .intro-lead-in {
     font-style: italic;
     line-height: 22px;
     /*background-color: white;*/
-    width: 500px;
+    margin-right: 60%;
 }
 
 header .intro-text .intro-heading {
